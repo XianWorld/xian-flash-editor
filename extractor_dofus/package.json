@@ -1,0 +1,7 @@
+{
+  "name": "dofus-extractor",
+  "version": "0.0.1",
+  "dependencies": {
+    "bytebuffer": "^3.5.4"
+  }
+}

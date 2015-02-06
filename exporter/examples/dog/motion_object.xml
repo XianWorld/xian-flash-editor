@@ -1,0 +1,95 @@
+<AnimationCore TimeScale="25000" Version="1" duration="7000">
+    <TimeMap strength="2" type="Quadratic"/>
+    <TimeMap strength="3" type="SineWave"/>
+    <metadata>
+        <names>
+            <name langID="zh_CN" value=""/>
+        </names>
+        <Settings orientToPath="0" xformPtXOffsetPct="0.5" xformPtYOffsetPct="0.5" xformPtZOffsetPixels="0"/>
+    </metadata>
+    <PropertyContainer id="headContainer">
+        <PropertyContainer id="Basic_Motion">
+            <Property TimeMapIndex="1" enabled="1" id="Motion_X" ignoreTimeMap="0" readonly="0" visible="1">
+                <Keyframe anchor="0,0" next="0,0" previous="0,0" roving="0" timevalue="0"/>
+                <Keyframe anchor="0,50" next="0,50" previous="0,50" roving="0" timevalue="2000"/>
+                <Keyframe anchor="0,85.5" next="0,85.5" previous="0,85.5" roving="0" timevalue="6000"/>
+            </Property>
+            <Property enabled="1" id="Motion_Y" ignoreTimeMap="0" readonly="0" visible="1">
+                <Keyframe anchor="0,0" next="0,0" previous="0,0" roving="0" timevalue="0"/>
+                <Keyframe anchor="0,-18.1" next="0,-18.1" previous="0,-18.1" roving="0" timevalue="2000"/>
+                <Keyframe anchor="0,19" next="0,19" previous="0,19" roving="0" timevalue="6000"/>
+            </Property>
+            <Property enabled="1" id="Rotation_Z" ignoreTimeMap="0" readonly="0" visible="1">
+                <Keyframe anchor="0,1" next="0,1" previous="0,1" roving="0" timevalue="0"/>
+                <Keyframe anchor="0,0" next="0,0" previous="0,0" roving="0" timevalue="2000"/>
+                <Keyframe anchor="0,-121" next="0,-121" previous="0,-121" roving="0" timevalue="6000"/>
+            </Property>
+        </PropertyContainer>
+        <PropertyContainer id="Transformation">
+            <Property enabled="1" id="Skew_X" ignoreTimeMap="0" readonly="0" visible="1">
+                <Keyframe anchor="0,0" next="0,0" previous="0,0" roving="0" timevalue="0"/>
+            </Property>
+            <Property enabled="1" id="Skew_Y" ignoreTimeMap="0" readonly="0" visible="1">
+                <Keyframe anchor="0,0" next="0,0" previous="0,0" roving="0" timevalue="0"/>
+            </Property>
+            <Property enabled="1" id="Scale_X" ignoreTimeMap="0" readonly="0" visible="1">
+                <Keyframe anchor="0,100" next="0,100" previous="0,100" roving="0" timevalue="0"/>
+                <Keyframe anchor="0,100" next="0,100" previous="0,100" roving="0" timevalue="6000"/>
+            </Property>
+            <Property enabled="1" id="Scale_Y" ignoreTimeMap="0" readonly="0" visible="1">
+                <Keyframe anchor="0,100" next="0,100" previous="0,100" roving="0" timevalue="0"/>
+                <Keyframe anchor="0,100" next="0,100" previous="0,100" roving="0" timevalue="6000"/>
+            </Property>
+        </PropertyContainer>
+        <PropertyContainer id="Colors">
+            <PropertyContainer id="Alpha_ColorXform">
+                <Property enabled="1" id="Alpha_Amount" ignoreTimeMap="0" readonly="0" visible="1">
+                    <Keyframe anchor="0,100" next="0,100" previous="0,100" roving="0" timevalue="0"/>
+                    <Keyframe anchor="0,50" next="0,50" previous="0,50" roving="0" timevalue="6000"/>
+                </Property>
+            </PropertyContainer>
+        </PropertyContainer>
+        <PropertyContainer id="Filters">
+            <PropertyContainer id="Glow_Filter">
+                <Property enabled="1" id="Glow_BlurX" ignoreTimeMap="0" readonly="0" visible="1">
+                    <Keyframe anchor="0,5" next="0,5" previous="0,5" roving="0" timevalue="0"/>
+                </Property>
+                <Property enabled="1" id="Glow_BlurY" ignoreTimeMap="0" readonly="0" visible="1">
+                    <Keyframe anchor="0,5" next="0,5" previous="0,5" roving="0" timevalue="0"/>
+                </Property>
+                <Property enabled="1" id="Glow_Strength" ignoreTimeMap="0" readonly="0" visible="1">
+                    <Keyframe anchor="0,100" next="0,100" previous="0,100" roving="0" timevalue="0"/>
+                    <Keyframe anchor="0,20" next="0,20" previous="0,20" roving="0" timevalue="6000"/>
+                </Property>
+                <Property enabled="1" id="Glow_Quality" readonly="0" value="0" visible="1"/>
+                <Property enabled="1" id="Glow_Color" ignoreTimeMap="0" readonly="0" visible="1">
+                    <Keyframe roving="0" timevalue="0" value="0xff0000ff"/>
+                </Property>
+                <Property enabled="1" id="Glow_Knockout" readonly="0" value="0" visible="1"/>
+                <Property enabled="1" id="Glow_InnerGlow" readonly="0" value="0" visible="1"/>
+            </PropertyContainer>
+        </PropertyContainer>
+    </PropertyContainer>
+</AnimationCore>
+
+<Motion duration="7" xmlns="fl.motion.*" xmlns:geom="flash.geom.*" xmlns:filters="flash.filters.*">
+<source>
+    <Source frameRate="25" x="-2" y="11.65" scaleX="1" scaleY="1" rotation="1" elementType="movie clip" symbolName="sprite 31">
+        <dimensions>
+            <geom:Rectangle left="-0.2" top="-1.35" width="7.1" height="7.9"/>
+        </dimensions>
+        <transformationPoint>
+            <geom:Point x="0.5000000000000001" y="0.5"/>
+        </transformationPoint>
+    </Source>
+</source>
+
+<Keyframe index="0">
+    <color>
+        <Color alphaMultiplier="1"/>
+    </color>
+    <filters>
+        <filters:GlowFilter blurX="5" blurY="5" color="0xFF0000" alpha="1" strength="1" quality="1" inner="false" knockout="false"/>
+    </filters>
+</Keyframe>
+</Motion>
