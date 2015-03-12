@@ -1,0 +1,114 @@
+<!--paste_motion_special-->
+<!--This XML file is used as a template to re-write the other file PasteMotionSpecialDialog.xml, in order to persist the settings.-->
+<dialog title="Export Options" buttons="accept, cancel">
+    <!--Animation Type-->
+    <grid>
+        <columns>
+            <column/>
+            <column/>
+        </columns>
+        <rows>
+            <row align="left">
+                <label value="Edit Type:" control="editType" />
+                <menulist id="editType">
+                    <menuitem label="Dofus" value="dofus" />
+                    <menuitem label="Xian" value="xian" />
+                </menulist>
+            </row>
+            <row align="left">
+                <label value="Animation Type:" control="animationType" />
+                <menulist id="animationType">
+                    <menuitem label="Common" value="common" />
+                    <menuitem label="Sprite_2" value="sprite_2" />
+                    <menuitem label="Sprite_4" value="sprite_4" />
+                    <menuitem label="Sprite_8" value="sprite_8" />
+                </menulist>
+            </row>
+        </rows>
+    </grid>
+    <separator/>
+    <!--Animation Items Normalization Options-->
+    <grid>
+        <columns>
+            <column/>
+            <column/>
+        </columns>
+        <rows>
+            <row align="left">
+                <checkbox id="normalizeClips" checked="false" label="Normalize clips"/>
+            </row>
+            <row align="left">
+                <label value="Clip Scale:" control="clipScale" />
+                <textbox id="clipScale" value="1"/>
+            </row>
+        </rows>
+    </grid>
+    <separator/>
+    <!--Animation Skeleton/Skin Definition Options-->
+    <grid>
+        <columns>
+            <column/>
+            <column/>
+        </columns>
+        <rows>
+            <row align="left">
+                <checkbox id="updateDefinition" checked="false" label="Update animation definition and collect slot items"/>
+            </row>
+            <row align="left">
+                <checkbox id="updateSlotLayerName" checked="false" label="Update slot layer name by skin definition"/>
+            </row>
+        </rows>
+    </grid>
+    <separator/>
+    <!--Skeleton Export Options-->
+    <grid>
+        <columns>
+            <column/>
+            <column/>
+        </columns>
+        <rows>
+            <row align="left">
+                <checkbox id="exportSkeleton" checked="true" label="Export Skeleton"/>
+            </row>
+        </rows>
+    </grid>
+    <separator/>
+    <!--Animation Export Options-->
+    <grid>
+        <columns>
+            <column/>
+            <column/>
+        </columns>
+        <rows>
+            <row align="left">
+                <checkbox id="exportAnimation" checked="false" label="Export Animation"/>
+            </row>
+            <row align="left">
+                <checkbox id="inSkeleton" checked="true" label="Save in skeleton"/>
+                <checkbox id="selectedAnimation" checked="false" label="Selected Animation"/>
+            </row>
+        </rows>
+    </grid>
+    <separator/>
+    <!--Skin Export Options-->
+    <grid>
+        <columns>
+            <column/>
+            <column/>
+        </columns>
+        <rows>
+            <row align="left">
+                <checkbox id="exportSkin" checked="false" label="Export Skin(Sprite Sheet)"/>
+            </row>
+            <row align="left">
+                <label value="Bit Depth:" control="bitDepth" />
+                <menulist id="bitDepth">
+                    <menuitem label="8bit" value="8" />
+                    <menuitem label="32bit" value="32" />
+                </menulist>
+            </row>
+        </rows>
+    </grid>
+    <separator/>
+    <!--</vbox>-->
+</dialog>

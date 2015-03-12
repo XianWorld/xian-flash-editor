@@ -15,122 +15,6 @@ var scriptDir = _getURIDir(fl.scriptURI);
 var file = scriptDir + 'json2.jsfl';
 fl.runScript(file);
 
-function debugInfo() {
-    var i, j, k, layer, frame, frames, element, elements, instance;
-    var dom = fl.getDocumentDOM();
-    var timeline = dom.getTimeline();
-    var library = dom.library;
-    var layers = timeline.layers;
-
-    var currentLayerId = timeline.currentLayer;
-    var currentLayer = layers[currentLayerId];
-    var currentFrames = currentLayer.frames;
-    var currentFrameId = timeline.currentFrame;
-    var currentFrame = currentFrames[currentFrameId];
-    var currentElements = currentFrame.elements;
-
-    var domObj, timelineObj, layerObj, frameObj, elementObj, itemObj;
-    domObj = {};
-    domObj.timeline = timelineObj = {
-        layers: []
-    };
-    for (i = 0; i < layers.length; i++) {
-        layer = layers[i];
-        layerObj = {
-            id: i,
-            name: layer.name,
-            animationType: layer.animationType,
-            layerType: layer.layerType,
-            frameCount: layer.frameCount,
-            frames: []
-        };
-        //fl.trace(
-        //    "[Layer] " + i
-        //    + " Name = " + layer.name
-        //    + " animationType = " + layer.animationType
-        //    + " layerType = " + layer.layerType
-        //    + " frameCount = " + layer.frameCount
-        //);
-        for (j = 0; j < layer.frames.length; j++) {
-            frame = layer.frames[j];
-            frameObj = {
-                id: j,
-                name: frame.name,
-                duration: frame.duration,
-                labelType: frame.labelType,
-                startFrame: frame.startFrame,
-                tweenType: frame.tweenType,
-                hasCustomEase: frame.hasCustomEase,
-                tweenEasing: frame.tweenEasing,
-                elements: []
-            };
-            //fl.trace(
-            //    "\t[Frames] " + j
-            //    + " Name = " + frame.name
-            //    + " duration = " + frame.duration
-            //    + " labelType = " + frame.labelType
-            //    + " startFrame = " + frame.startFrame
-            //    + " tweenType = " + frame.tweenType
-            //    + " hasCustomEase = " + frame.hasCustomEase
-            //    + " tweenEasing = " + frame.tweenEasing
-            //);
-            //if (frame.isMotionObject()) {
-            //    fl.trace(
-            //        "\t\t[MotionObject] : " + frame.getMotionObjectXML());
-            //}
-            for (k = 0; k < frame.elements.length; k++) {
-                element = frame.elements[k];
-                elementObj = {
-                    id: k,
-                    name: element.name,
-                    left: element.left,
-                    top: element.top,
-                    width: element.width,
-                    height: element.height,
-                    transformX: element.transformX,
-                    transformY: element.transformY,
-                    x: element.x,
-                    y: element.y,
-                    rotation: element.rotation,
-                    scaleX: element.scaleX,
-                    scaleY: element.scaleY,
-                    skewX: element.skewX,
-                    skewY: element.skewY,
-                    depth: element.depth
-                };
-                //fl.trace(
-                //    "[Element] " + k
-                //    + " name = " + element.name
-                //    + " elementType = " + element.elementType
-                //    + " bounds = " + element.left + "," + element.top + "," + element.width + "," + element.height
-                //    + " transform = " + element.transformX + "," + element.transformY
-                //    + " pos = " + element.x + "," + element.y
-                //    + " rotation = " + element.rotation
-                //    + " scale = " + element.scaleX + "," + element.scaleY
-                //    + " skew = " + element.skewX + "," + element.skewY
-                //    + " Depth = " + element.depth
-                //);
-                //
-                if (element.elementType === 'instance') {
-                    instance = element;
-                    elementObj.instanceType = instance.instanceType;
-                    elementObj.libraryItem = instance.libraryItem.name + "(" + instance.libraryItem.itemType + ")";
-                    //fl.trace(
-                    //    "[Instance] "
-                    //    + " instanceType = " + instance.instanceType
-                    //    + " libraryItem = " + instance.libraryItem
-                    //);
-                }
-                frameObj.elements[k] = elementObj;
-            }
-            layerObj.frames[j] = frameObj;
-        }
-        timelineObj.layers[i] = layerObj;
-    }
-    var data = JSON.stringify(domObj, null, '\t');
-    fl.trace(data);
-}
-
 function testSpriteSheetExporter(name, layoutFormat) {
     var exporter = fl.spriteSheetExporter;//new SpriteSheetExporter();
     var dom = fl.getDocumentDOM();
@@ -403,9 +287,34 @@ function testSpriteSheetExporter2(name, layoutFormat) {
 //    }
 //}
 
+function testScaleItem(){
+    var m, instance, item, itemData, len;
+    var dom = fl.getDocumentDOM();
+    var timeline = dom.getTimeline();
+    var library = dom.library;
+
+    var selectedItems = library.getSelectedItems();
+    if (!selectedItems || selectedItems.length === 0) {
+        fl.trace('[Error]: should select a item in library!');
+        return;
+    }
+
+    item = selectedItems[0];
+
+    library.editItem(item.name);
+    dom.selectNone();
+    dom.selectAll();
+    dom.scaleSelection(0.1, 0.1);
+
+    dom.editScene(0);
+
+}
 fl.outputPanel.clear();
-debugInfo();
 
 //testSpriteSheetExporter('dog1');
 //testSpriteSheetExporter1('dog2');
-testSpriteSheetExporter2('dog2');
+//testSpriteSheetExporter2('dog2');
+
+//testScaleItem();
+
+fl.trace(fl.scriptURI);
