@@ -347,6 +347,11 @@ if (!Xian.Utils) {
             if (v > 0) return 1;
         }
 
+        function color32HexString(hex, head) {
+            var str = ("0000000" + ( hex | 0).toString(16)).substr(-8);
+            return head ? "#" + str : str;
+        }
+
         var Utils = {};
         Utils.getURIDir = getURIDir;
         Utils.documentDirURI = documentDirURI;
@@ -372,6 +377,7 @@ if (!Xian.Utils) {
         //Math functions
         Utils.roundValue = roundValue;
         Utils.compareValue = compareValue;
+        Utils.color32HexString = color32HexString;
 
         Xian.Utils = Utils;
     }());

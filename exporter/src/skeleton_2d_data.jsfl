@@ -307,9 +307,9 @@ if (!Xian.Skeleton2DData) {
                 add = true;
             else {
                 data = frames[len - 1];
-                if (Utils.compareValue(data.x, x, 1) !== 0)
+                if (Utils.compareValue(data.x, x, 2) !== 0)
                     add = true;
-                if (Utils.compareValue(data.y, y, 1) !== 0)
+                if (Utils.compareValue(data.y, y, 2) !== 0)
                     add = true;
             }
             if (!add) return false;
@@ -321,15 +321,22 @@ if (!Xian.Skeleton2DData) {
             var frames = this.rotateFrames;
             var add = false;
             var len = frames.length;
-            if (len == 0)
+            if (len == 0) {
+                //if (Utils.compareValue(0.0, rotation, 0.2) !== 0)
+                //    add = true;
+                //if (Utils.compareValue(0.0, skewX, 0.2) !== 0)
+                //    add = true;
+                //if (Utils.compareValue(0.0, skewY, 0.2) !== 0)
+                //    add = true;
                 add = true;
+            }
             else {
                 data = frames[len - 1];
-                if (Utils.compareValue(data.angle, rotation, 0.1) !== 0)
+                if (Utils.compareValue(data.angle, rotation, 0.2) !== 0)
                     add = true;
-                if (Utils.compareValue(data.skewX, skewX, 0.1) !== 0)
+                if (Utils.compareValue(data.skewX, skewX, 0.2) !== 0)
                     add = true;
-                if (Utils.compareValue(data.skewY, skewY, 0.1) !== 0)
+                if (Utils.compareValue(data.skewY, skewY, 0.2) !== 0)
                     add = true;
             }
             if (!add) return false;
@@ -341,17 +348,99 @@ if (!Xian.Skeleton2DData) {
             var frames = this.scaleFrames;
             var add = false;
             var len = frames.length;
-            if (len == 0)
-                add = true;
+            if (len == 0) {
+                if (Utils.compareValue(x, 1.0, 0.02) !== 0)
+                    add = true;
+                if (Utils.compareValue(y, 1.0, 0.02) !== 0)
+                    add = true;
+            }
             else {
                 data = frames[len - 1];
-                if (Utils.compareValue(data.x, x, 0.01) !== 0)
+                if (Utils.compareValue(data.x, x, 0.02) !== 0)
                     add = true;
-                if (Utils.compareValue(data.y, y, 0.01) !== 0)
+                if (Utils.compareValue(data.y, y, 0.02) !== 0)
                     add = true;
             }
             if (!add) return false;
             frames.push({"time": time, "x": x, "y": y});
+            return true;
+        };
+
+        function SlotTimelineData() {
+            this.drawOrderFrames = [];
+            this.attachmentFrames = [];
+            this.colorFrames = [];
+        }
+        SlotTimelineData.prototype.toJSON = function (json) {
+            json || (json = {});
+            if (this.drawOrderFrames.length > 0)
+                json.drawOrder = this.drawOrderFrames;
+            if (this.attachmentFrames.length > 0)
+                json.attachment = this.attachmentFrames;
+            if (this.colorFrames.length > 0)
+                json.color = this.colorFrames;
+            return json;
+        };
+        SlotTimelineData.prototype.addDrawOrderFrame = function (time, index) {
+            var data;
+            var frames = this.drawOrderFrames;
+            var add = false;
+            var len = frames.length;
+            if (len == 0)
+                add = true;
+            else {
+                data = frames[len - 1];
+                if (Utils.compareValue(data.index, index) !== 0)
+                    add = true;
+            }
+            if (!add) return false;
+            frames.push({"time": time, "index": index});
+            return true;
+        };
+        SlotTimelineData.prototype.addAttachmentFrame = function (time, name) {
+            var data;
+            var frames = this.attachmentFrames;
+            var add = false;
+            var len = frames.length;
+            if (len == 0)
+                add = true;
+            else {
+                data = frames[len - 1];
+                if (data.name != name)
+                    add = true;
+            }
+            if (!add) return false;
+            frames.push({"time": time, "name": name});
+            return true;
+        };
+        SlotTimelineData.prototype.addColorFrame = function (time, r, g, b, a) {
+            var data;
+            var frames = this.colorFrames;
+            var add = false;
+            var len = frames.length;
+            r = r & 0xff;
+            g = g & 0xff;
+            b = b & 0xff;
+            a = a & 0xff;
+            if (len == 0) {
+                if (Utils.compareValue(0, a, 2) !== 0)
+                    add = true;
+            }
+            else {
+                data = frames[len - 1];
+                if (Utils.compareValue(data.r, r, 2) !== 0)
+                    add = true;
+                if (Utils.compareValue(data.g, g, 2) !== 0)
+                    add = true;
+                if (Utils.compareValue(data.b, b, 2) !== 0)
+                    add = true;
+                if (Utils.compareValue(data.a, a, 2) !== 0)
+                    add = true;
+            }
+            if (!add) return false;
+            //var color = (a<<24) | (r<<16) | (g<<8) | (b);
+            //var colorString = Utils.color32HexString(color);
+            frames.push({"time": time, "r": r, "g": g, "b": b, "a": a});
             return true;
         };
 
@@ -392,6 +481,7 @@ if (!Xian.Skeleton2DData) {
 
         Xian.Animation2DData = Animation2DData;
         Xian.BoneTimelineData = BoneTimelineData;
+        Xian.SlotTimelineData = SlotTimelineData;
         //Xian.TranslateTimelineData = TranslateTimelineData;
     }());
 
