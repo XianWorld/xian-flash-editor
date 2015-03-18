@@ -298,7 +298,7 @@ if (!Xian.Skeleton2DData) {
                 json.scale = this.scaleFrames;
             return json;
         };
-        BoneTimelineData.prototype.addTranslateFrame = function (time, x, y) {
+        BoneTimelineData.prototype.addTranslateFrame = function (time, x, y, curve) {
             var data;
             var frames = this.translateFrames;
             var add = false;
@@ -307,16 +307,20 @@ if (!Xian.Skeleton2DData) {
                 add = true;
             else {
                 data = frames[len - 1];
-                if (Utils.compareValue(data.x, x, 2) !== 0)
+                if (Utils.compareValue(data.x, x, 0.1) !== 0)
                     add = true;
-                if (Utils.compareValue(data.y, y, 2) !== 0)
+                if (Utils.compareValue(data.y, y, 0.1) !== 0)
                     add = true;
+                if(!add && curve) data.curve = curve;
             }
             if (!add) return false;
-            frames.push({"time": time, "x": x, "y": y});
+            var obj = {"time": time, "x": x, "y": y};
+            //if(curve && data) data.curve = curve;
+            if(curve) obj.curve = curve;
+            frames.push(obj);
             return true;
         };
-        BoneTimelineData.prototype.addRotateFrame = function (time, rotation, skewX, skewY) {
+        BoneTimelineData.prototype.addRotateFrame = function (time, rotation, skewX, skewY, curve) {
             var data;
             var frames = this.rotateFrames;
             var add = false;
@@ -332,37 +336,45 @@ if (!Xian.Skeleton2DData) {
             }
             else {
                 data = frames[len - 1];
-                if (Utils.compareValue(data.angle, rotation, 0.2) !== 0)
+                if (Utils.compareValue(data.angle, rotation, 0.1) !== 0)
                     add = true;
-                if (Utils.compareValue(data.skewX, skewX, 0.2) !== 0)
+                if (Utils.compareValue(data.skewX, skewX, 0.1) !== 0)
                     add = true;
-                if (Utils.compareValue(data.skewY, skewY, 0.2) !== 0)
+                if (Utils.compareValue(data.skewY, skewY, 0.1) !== 0)
                     add = true;
+                if(!add && curve) data.curve = curve;
             }
             if (!add) return false;
-            frames.push({"time": time, "angle": rotation, "skewX": skewX, "skewY": skewY});
+            var obj = {"time": time, "angle": rotation, "skewX": skewX, "skewY": skewY};
+            //if(curve && data) data.curve = curve;
+            if(curve) obj.curve = curve;
+            frames.push(obj);
             return true;
         };
-        BoneTimelineData.prototype.addScaleFrame = function (time, x, y) {
+        BoneTimelineData.prototype.addScaleFrame = function (time, x, y, curve) {
             var data;
             var frames = this.scaleFrames;
             var add = false;
             var len = frames.length;
             if (len == 0) {
-                if (Utils.compareValue(x, 1.0, 0.02) !== 0)
+                if (Utils.compareValue(x, 1.0, 0.01) !== 0)
                     add = true;
-                if (Utils.compareValue(y, 1.0, 0.02) !== 0)
+                if (Utils.compareValue(y, 1.0, 0.01) !== 0)
                     add = true;
             }
             else {
                 data = frames[len - 1];
-                if (Utils.compareValue(data.x, x, 0.02) !== 0)
+                if (Utils.compareValue(data.x, x, 0.01) !== 0)
                     add = true;
-                if (Utils.compareValue(data.y, y, 0.02) !== 0)
+                if (Utils.compareValue(data.y, y, 0.01) !== 0)
                     add = true;
+                if(!add && curve) data.curve = curve;
             }
             if (!add) return false;
-            frames.push({"time": time, "x": x, "y": y});
+            var obj = {"time": time, "x": x, "y": y};
+            //if(curve && data) data.curve = curve;
+            if(curve) obj.curve = curve;
+            frames.push(obj);
             return true;
         };
 
@@ -423,18 +435,18 @@ if (!Xian.Skeleton2DData) {
             b = b & 0xff;
             a = a & 0xff;
             if (len == 0) {
-                if (Utils.compareValue(0, a, 2) !== 0)
+                if (Utils.compareValue(0, a, 1) !== 0)
                     add = true;
             }
             else {
                 data = frames[len - 1];
-                if (Utils.compareValue(data.r, r, 2) !== 0)
+                if (Utils.compareValue(data.r, r, 1) !== 0)
                     add = true;
-                if (Utils.compareValue(data.g, g, 2) !== 0)
+                if (Utils.compareValue(data.g, g, 1) !== 0)
                     add = true;
-                if (Utils.compareValue(data.b, b, 2) !== 0)
+                if (Utils.compareValue(data.b, b, 1) !== 0)
                     add = true;
-                if (Utils.compareValue(data.a, a, 2) !== 0)
+                if (Utils.compareValue(data.a, a, 1) !== 0)
                     add = true;
             }
             if (!add) return false;

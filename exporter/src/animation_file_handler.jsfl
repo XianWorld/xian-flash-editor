@@ -197,6 +197,7 @@ if (!Xian.AnimationFileHandler) {
                 handler = animationHandlers[i];
                 handler.updateSlotLayerName(itemSlotLayerHash);
             }
+            this.saveEditItem();
 
         };
 

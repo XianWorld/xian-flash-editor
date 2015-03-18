@@ -277,26 +277,36 @@ if (!Xian.AnimationItemHandler) {
         };
 
         AnimationItemHandler.prototype.buildBoneTimeline = function (boneName, layers, frameTime) {
-            var i, j, k, m, layer, layers, frame, frames, element, elements, instance, item;
+            var i, j, k, m, layer, frame, frames, element, elements, instance, item;
             var timeline = this.item.timeline;
 
             var boneElement;
+            var boneFrame;
             var boneFrames = [];
             Utils.traverseLayersElements(timeline, layers, function (timeline1, layer, frame, element) {
                 if (element.elementType !== 'instance') return;
 
                 var boneElement = boneFrames[frame.startFrame];
                 if (!boneElement)
-                    boneFrames[frame.startFrame] = element;
+                    boneFrames[frame.startFrame] = frame;//element;
             }, true);
 
+            var lastElement = null;
+            var curve;
             var time;
+            var have = false;
             //var translateTimeline = new Xian.TranslateTimelineData();
             var boneTimeline = new Xian.BoneTimelineData();
             for (i = 0; i < boneFrames.length; i++) {
-                boneElement = boneFrames[i];
+                boneFrame = boneFrames[i];
+                if(!boneFrame)
+                    continue;
+                boneElement = boneFrame.elements[0];
                 if(!boneElement)
                     continue;
+
+                curve = null;
+                //"curve": "stepped"
                 time = frameTime * i;
 
                 var x = Utils.roundValue(boneElement.x, 100);
@@ -307,9 +317,18 @@ if (!Xian.AnimationItemHandler) {
                 var scaleX = Utils.roundValue(boneElement.scaleX, 100);
                 var scaleY = Utils.roundValue(boneElement.scaleY, 100);
 
-                boneTimeline.addTranslateFrame(time, x, y);
-                boneTimeline.addRotateFrame(time, rotation, skewX, skewY);
-                boneTimeline.addScaleFrame(time, scaleX, scaleY);
+                //if(lastElement != null && boneElement.libraryItem.name !== lastElement.libraryItem.name)
+                //    curve = "stepped";
+                if(boneFrame.tweenType !== "motion"){
+                    fl.trace(this.item.name + ": "+boneName + ", " + boneFrame.startFrame);
+                    curve = "stepped";
+                }
+
+                boneTimeline.addTranslateFrame(time, x, y, curve);
+                boneTimeline.addRotateFrame(time, rotation, skewX, skewY, curve);
+                boneTimeline.addScaleFrame(time, scaleX, scaleY, curve);
+                have = true;
+                lastElement = boneElement;
             }
 
             //var have = false;
@@ -318,7 +337,8 @@ if (!Xian.AnimationItemHandler) {
             //    boneTimelineHash.translate = translateTimeline.frames;
             //    have = true;
             //}
-
+            if(!have)
+                return null;
             return boneTimeline.toJSON();
         };
 
@@ -332,6 +352,7 @@ if (!Xian.AnimationItemHandler) {
 
             layers = timeline.layers;
 
+            //build slot layer list hash map
             var slotLayerHash = {};
             var slotLayers;
             for (i = 0; i < layers.length; i++) {
@@ -370,7 +391,7 @@ if (!Xian.AnimationItemHandler) {
 
                     slotLayers = slotLayerHash[slotName];
                     have = false;
-                    for (k = 0; k < slotLayers.length; i++) {
+                    for (k = 0; k < slotLayers.length; k++) {
                         slotLayer = slotLayers[k];
                         frames = slotLayer.frames;
                         if(frames.length <= j)
